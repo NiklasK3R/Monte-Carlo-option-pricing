@@ -52,15 +52,6 @@ The fair price of a European Call option is the discounted expected payoff under
 
 $$C = e^{-rT} \cdot \frac{1}{N} \sum_{i=1}^{N} \max(S_T^{(i)} - K,\, 0)$$
 
-### Greeks via Finite Differences
-
-Delta and Gamma are estimated numerically:
-
-$$\Delta = \frac{C(S_0 + h) - C(S_0 - h)}{2h}$$
-
-$$\Gamma = \frac{C(S_0 + h) - 2C(S_0) + C(S_0 - h)}{h^2}$$
-
----
 
 ## Installation
 
@@ -76,7 +67,7 @@ python3 -m venv .venv
 source .venv/bin/activate
 
 # Install Python dependencies
-pip install maturin matplotlib numpy jupyter
+pip install -r requirements.txt
 
 # Compile Rust extension and install package
 maturin develop
@@ -97,20 +88,6 @@ python -m mc_option_pricing --start 100 --strike 110 --sigma 0.3 --maturity 0.5 
 # All options
 python -m mc_option_pricing --help
 ```
-
-## Benchmark
-
-Simulating 50,000 GBM paths (252 steps each):
-
-| Implementation         | Time    | Speedup |
-|------------------------|---------|---------|
-| Pure Python            | ~9.0s   | 1x      |
-| Rust (single-threaded) | ~1.0s   | ~9x     |
-| Rust (4 threads)       | ~0.56s  | ~16x    |
-
-Parallelization is handled transparently via [Rayon](https://github.com/rayon-rs/rayon).
-
----
 
 ## Example Results
 
